@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring MVC</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link th:href="@{styles/main.css}" rel="stylesheet"/>
+</head>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/header :: header}"></div>
+<a th:href="@{/test/new}">Create New Product</a>
+
+<main role="main" class="flex-shrink-0">
+  <div class="container mt-5">
+    <div class="">
+      <table class="table  table-bordered">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>nom</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="test : ${tests}">
+          <td th:text="${test.id}">ID</td>
+          <td th:text="${test.nom}">nom</td>
+          <td>
+            <a th:href="@{/test/edit/{id}(id=${test.id})}" class="btn btn-warning">Edit</a>
+            <a th:href="@{/test/delete/{id}(id=${test.id})}" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous">
+</script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>
