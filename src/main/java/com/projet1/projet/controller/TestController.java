@@ -16,6 +16,7 @@ import java.util.Optional;
 public class TestController {
     @Autowired
     private TestService testService;
+
     @GetMapping("/")
     public String listTest(Model model) {
 
@@ -23,16 +24,19 @@ public class TestController {
         model.addAttribute("tests", tests);
         return "test/index";
     }
+
     @GetMapping("/new")
     public String createTestForm(Model model) {
         model.addAttribute("teste", new Test());
         return "test/add";
     }
+
     @PostMapping
     public String saveProduct(@ModelAttribute("teste") Test test) {
         testService.saveTest(test);
         return "redirect:/test/";
     }
+
     @GetMapping("/edit/{id}")
     public String editProductForm(@PathVariable Long id, Model model) {
         Optional<Test> optionalTest = testService.getTesteById(id);

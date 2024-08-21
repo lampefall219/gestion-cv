@@ -3,6 +3,7 @@ package com.projet1.projet.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+
 @Entity
 public class Category {
     @Id

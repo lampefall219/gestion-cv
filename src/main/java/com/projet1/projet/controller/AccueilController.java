@@ -24,28 +24,32 @@ public class AccueilController {
     private CompteService compteService;
     @Autowired
     private UtilisateurService utilisateurService;
+
     @GetMapping("/")
-    public String getInfo(Model model){
+    public String getInfo(Model model) {
         model.addAttribute("activePage", "index");
         return "index";
     }
+
     @GetMapping("/new")
     public String createUtilisateurForm(Model model) {
         model.addAttribute("compte", new Compte());
         return "compte/inscription";
 
     }
+
     @GetMapping("/login")
     public String connexion(Model model) {
         model.addAttribute("compte", new Compte());
         return "compte/login";
     }
+
     @PostMapping("/add")
-    public String login(@RequestParam("email") String email,@RequestParam("password") String password, RedirectAttributes redirectAttributes,Model model, @RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size) {
-       String mailadmin="lolampe91@gmail.com";
-       String pwd="123";
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes, Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        String mailadmin = "lolampe91@gmail.com";
+        String pwd = "123";
         Utilisateur utilisateur1 = utilisateurService.existe(email);
-        if(email =="lolampe91@gmail.com") {
+        if (email == "lolampe91@gmail.com") {
             if (!compteService.existe(email, password)) {
                 // model.addAttribute("compte", new Compte()); // Formulaire d'inscription si l'utilisateur n'existe pas
                 redirectAttributes.addFlashAttribute("error", "Email OU Mot de passe incorrect !!!!.");
@@ -67,7 +71,7 @@ public class AccueilController {
                 model.addAttribute("utilisateur", new Utilisateur()); // Ajouter un objet formulaire de CV vide
                 return "utilisateur/add"; // Vue du formulaire de création de CV
             }
-        }else {
+        } else {
             Pageable pageable = PageRequest.of(page, size);
             Page<Utilisateur> userPage = utilisateurService.findAll(pageable);
             model.addAttribute("userPage", userPage);
@@ -75,13 +79,14 @@ public class AccueilController {
         }
 
     }
+
     @PostMapping
     public String saveUser(@ModelAttribute("compte") Compte compte, RedirectAttributes redirectAttributes) {
-        boolean test = compteService.existe(compte.getEmail(),compte.getPassword());
-        if (test){
+        boolean test = compteService.existe(compte.getEmail(), compte.getPassword());
+        if (test) {
             redirectAttributes.addFlashAttribute("error", "vous avez deja un compte.");
             return "redirect:/";
-        }else {
+        } else {
             compteService.saveCompte(compte);
             redirectAttributes.addFlashAttribute("success", "Inscription réussie! Vous pouvez maintenant vous connecter.");
             return "redirect:/";

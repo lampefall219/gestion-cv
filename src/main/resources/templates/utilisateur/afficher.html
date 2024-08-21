@@ -30,12 +30,15 @@
                     <td th:text="${utilisateur.adresse}">Adresse</td>
                     <td th:text="${utilisateur.email}">Email</td>
                     <td>
-                        <img th:src="@{/utilisateur/photo/{id}(id=${utilisateur.id})}" alt="Photo" style="width: 100px; height: 40px;" />
+                        <img th:src="@{/utilisateur/photo/{id}(id=${utilisateur.id})}" alt="Photo"
+                             style="width: 100px; height: 40px;"/>
                     </td>
                     <td>
                         <a th:href="@{/utilisateur/view/{id}(id=${utilisateur.id})}" class="btn btn-info">Voir</a>
-                        <a th:href="@{/utilisateur/edit/{id}(id=${utilisateur.id})}" class="btn btn-warning">Modifier</a>
-                        <a th:href="@{/utilisateur/delete/{id}(id=${utilisateur.id})}" class="btn btn-danger" th:onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?');">Supprimer</a>
+                        <a th:href="@{/utilisateur/edit/{id}(id=${utilisateur.id})}"
+                           class="btn btn-warning">Modifier</a>
+                        <a th:href="@{/utilisateur/delete/{id}(id=${utilisateur.id})}" class="btn btn-danger"
+                           th:onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?');">Supprimer</a>
                     </td>
                 </tr>
                 </tbody>
@@ -45,7 +48,8 @@
 </main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
