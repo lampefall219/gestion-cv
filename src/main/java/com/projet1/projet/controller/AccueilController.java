@@ -1,9 +1,7 @@
 package com.projet1.projet.controller;
 
 import com.projet1.projet.model.Compte;
-import com.projet1.projet.model.Inscription;
 import com.projet1.projet.model.Utilisateur;
-import com.projet1.projet.repository.UtilisateurRepository;
 import com.projet1.projet.services.CompteService;
 import com.projet1.projet.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
