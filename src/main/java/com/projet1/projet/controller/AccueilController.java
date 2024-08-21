@@ -47,34 +47,33 @@ public class AccueilController {
        String mailadmin="lolampe91@gmail.com";
        String pwd="123";
         Utilisateur utilisateur1 = utilisateurService.existe(email);
-        if(mailadmin == email && password ==pwd){
+        if(email =="lolampe91@gmail.com") {
+            if (!compteService.existe(email, password)) {
+                // model.addAttribute("compte", new Compte()); // Formulaire d'inscription si l'utilisateur n'existe pas
+                redirectAttributes.addFlashAttribute("error", "Email OU Mot de passe incorrect !!!!.");
+                return "redirect:/";
+            } else if (utilisateur1 != null) {
+                model.addAttribute("utilisateur", utilisateur1); // Formulaire d'inscription si l'utilisateur n'existe pas
+                return "utilisateur/afficher";
+            } else {
+                Utilisateur utilisateur = new Utilisateur();
+
+                utilisateur.setEducations(new ArrayList<>());
+                utilisateur.setExperiences(new ArrayList<>());
+                utilisateur.setQualifications(new ArrayList<>());
+                utilisateur.setLanguages(new ArrayList<>());
+                utilisateur.setKnowledges(new ArrayList<>());
+                utilisateur.setCentreInterets(new ArrayList<>());
+
+
+                model.addAttribute("utilisateur", new Utilisateur()); // Ajouter un objet formulaire de CV vide
+                return "utilisateur/add"; // Vue du formulaire de création de CV
+            }
+        }else {
             Pageable pageable = PageRequest.of(page, size);
             Page<Utilisateur> userPage = utilisateurService.findAll(pageable);
             model.addAttribute("userPage", userPage);
-            return "utilisateur/index";
-
-        } else if (!compteService.existe(email,password)) {
-           // model.addAttribute("compte", new Compte()); // Formulaire d'inscription si l'utilisateur n'existe pas
-            redirectAttributes.addFlashAttribute("error", "Email OU Mot de passe incorrect !!!!.");
-            return "redirect:/";
-        } else if (utilisateur1!=null) {
-            model.addAttribute("utilisateur",utilisateur1 ); // Formulaire d'inscription si l'utilisateur n'existe pas
-                    return "utilisateur/afficher";
-        } else {
-            Utilisateur utilisateur = new Utilisateur();
-
-            utilisateur.setEducations(new ArrayList<>());
-            utilisateur.setExperiences(new ArrayList<>());
-            utilisateur.setQualifications(new ArrayList<>());
-            utilisateur.setLanguages(new ArrayList<>());
-            utilisateur.setKnowledges(new ArrayList<>());
-            utilisateur.setCentreInterets(new ArrayList<>());
-
-
-
-
-            model.addAttribute("Utilisateur", new Utilisateur()); // Ajouter un objet formulaire de CV vide
-            return "utilisateur/add"; // Vue du formulaire de création de CV
+            return "admin/admin";
         }
 
     }

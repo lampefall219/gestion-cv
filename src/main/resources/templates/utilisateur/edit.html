@@ -16,7 +16,7 @@
   <div class="container mt-5">
     <div class="">
       <h1>creation cv </h1>
-      <form th:action="@{/utilisateur/{id}(id=${Utilisateur.id})}" th:object="${Utilisateur}" method="post" enctype="multipart/form-data" class="row g-3">
+      <form th:action="@{/utilisateur/{id}(id=${utilisateur.id})}" th:object="${utilisateur}" method="post" enctype="multipart/form-data" class="row g-3">
         <input type="hidden" th:field="*{id}" />
         <div class="col-md-6">
           <label for="nom">Nom:</label>
@@ -49,9 +49,9 @@
         <div class="col-md-6">
           <label for="sexe">Sexe:</label>
           <select id="sexe" class="form-control" th:field="*{sexe}">
-            <option value="Masculin" th:selected="${Utilisateur.sexe == 'Masculin'}">Masculin</option>
-            <option value="Féminin" th:selected="${Utilisateur.sexe == 'Féminin'}">Féminin</option>
-            <option value="Autre" th:selected="${Utilisateur.sexe == 'Autre'}">Autre</option>
+            <option value="Masculin" th:selected="${utilisateur.sexe == 'Masculin'}">Masculin</option>
+            <option value="Féminin" th:selected="${utilisateur.sexe == 'Féminin'}">Féminin</option>
+            <option value="Autre" th:selected="${utilisateur.sexe == 'Autre'}">Autre</option>
           </select>
         </div>
         <div class="col-md-6">
@@ -61,10 +61,10 @@
         <div class="col-md-6">
           <label for="situationMatrimoniale">Situation matrimoniale:</label>
           <select id="situationMatrimoniale" class="form-control" th:field="*{situationMatrimoniale}">
-            <option value="Célibataire" th:selected="${Utilisateur.situationMatrimoniale == 'Célibataire'}">Célibataire</option>
-            <option value="Marié(e)" th:selected="${Utilisateur.situationMatrimoniale == 'Marié(e)'}">Marié(e)</option>
-            <option value="Divorcé(e)" th:selected="${Utilisateur.situationMatrimoniale == 'Divorcé(e)'}">Divorcé(e)</option>
-            <option value="Veuf(ve)" th:selected="${Utilisateur.situationMatrimoniale == 'Veuf(ve)'}">Veuf(ve)</option>
+            <option value="Célibataire" th:selected="${utilisateur.situationMatrimoniale == 'Célibataire'}">Célibataire</option>
+            <option value="Marié(e)" th:selected="${utilisateur.situationMatrimoniale == 'Marié(e)'}">Marié(e)</option>
+            <option value="Divorcé(e)" th:selected="${utilisateur.situationMatrimoniale == 'Divorcé(e)'}">Divorcé(e)</option>
+            <option value="Veuf(ve)" th:selected="${utilisateur.situationMatrimoniale == 'Veuf(ve)'}">Veuf(ve)</option>
           </select>
         </div>
         <div class="col-md-12">
@@ -78,6 +78,7 @@
             <div th:each="education, iterStat : *{educations}" class="education-row row g-3 mb-3">
               <div class="col-md-6">
                 <label class="form-label">Nom de la Formation</label>
+                <input type="hidden" th:field="*{educations[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{educations[__${iterStat.index}__].nomFormation}" class="form-control">
               </div>
               <div class="col-md-6">
@@ -116,6 +117,7 @@
             <div th:each="experience, iterStat : *{experiences}" class="experience-row row g-3 mb-3">
               <div class="col-md-6">
                 <label class="form-label">Entreprise</label>
+                <input type="hidden" th:field="*{experiences[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{experiences[__${iterStat.index}__].entreprise}" class="form-control">
               </div>
               <div class="col-md-6">
@@ -146,6 +148,7 @@
             <div th:each="qualification, iterStat : *{qualifications}" class="qualification-row row g-3 mb-3">
               <div class="col-md-12">
                 <label class="form-label">Qualification</label>
+                <input type="hidden" th:field="*{qualifications[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{qualifications[__${iterStat.index}__].nom}" class="form-control">
               </div>
               <div class="col-md-12">
@@ -164,6 +167,7 @@
             <div th:each="connaissance, iterStat : *{knowledges}" class="connaissance-row row g-3 mb-3">
               <div class="col-md-12">
                 <label class="form-label">Catégorie</label>
+                <input type="hidden" th:field="*{knowledges[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{knowledges[__${iterStat.index}__].category}" class="form-control">
               </div>
 
@@ -187,6 +191,7 @@
             <div th:each="langue, iterStat : *{languages}" class="langue-row row g-3 mb-3">
               <div class="col-md-12">
                 <label class="form-label">Langue</label>
+                <input type="hidden" th:field="*{languages[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{languages[__${iterStat.index}__].langue}" class="form-control">
               </div>
               <div class="col-md-12">
@@ -209,6 +214,7 @@
             <div th:each="centre, iterStat : *{centreInterets}" class="centre-interet-row row g-3 mb-3">
               <div class="col-md-12">
                 <label class="form-label">Centre d'Intérêt</label>
+                <input type="hidden" th:field="*{centreInterets[__${iterStat.index}__].id}" />
                 <input type="text" th:field="*{centreInterets[__${iterStat.index}__].nom}" class="form-control">
               </div>
               <div class="col-md-12">
@@ -240,6 +246,7 @@
     const row = document.createElement('div');
     row.className = 'education-row row g-3 mb-3';
     row.innerHTML = `
+            <input type="hidden" name="educations[${educationIndex}].id" value="" />
       <div class="col-md-6">
         <label class="form-label">Nom de la Formation</label>
         <input type="text" name="educations[${educationIndex}].nomFormation" class="form-control">
@@ -278,6 +285,7 @@
     const row = document.createElement('div');
     row.className = 'experience-row row g-3 mb-3';
     row.innerHTML = `
+     <input type="hidden" name="experiences[${experienceIndex}].id" value="" />
       <div class="col-md-6">
         <label class="form-label">Entreprise</label>
         <input type="text" name="experiences[${experienceIndex}].entreprise" class="form-control">
@@ -308,6 +316,7 @@
     const row = document.createElement('div');
     row.className = 'qualification-row row g-3 mb-3';
     row.innerHTML = `
+        <input type="hidden" name="qualifications[${qualificationIndex}].id" value="" />
       <div class="col-md-12">
         <label class="form-label">Qualification</label>
         <input type="text" name="qualifications[${qualificationIndex}].nom" class="form-control">
@@ -326,6 +335,8 @@
     const row = document.createElement('div');
     row.className = 'connaissance-row row g-3 mb-3';
     row.innerHTML = `
+        <input type="hidden" name="knowledges[${connaissanceIndex}].id" value="" />
+
       <div class="col-md-12">
         <label class="form-label">Catégorie</label>
         <input type="text" name="knowledges[${connaissanceIndex}].category" class="form-control">
@@ -348,6 +359,7 @@
     var newEntry = document.createElement('div');
     newEntry.classList.add('langue-row', 'row', 'g-3', 'mb-3');
     newEntry.innerHTML = `
+            <input type="hidden" name="languages[${langueIndex}].id" value="" />
       <div class="col-md-12">
         <label class="form-label">Langue</label>
         <input type="text" name="languages[${langueIndex}].langue" class="form-control">
@@ -370,6 +382,7 @@
     const row = document.createElement('div');
     row.className = 'centre-interet-row row g-3 mb-3';
     row.innerHTML = `
+                <input type="hidden" name="centreInterets[${centreInteretIndex}].id" value="" />
       <div class="col-md-12">
         <label class="form-label">Centre d'Intérêt</label>
         <input type="text" name="centreInterets[${centreInteretIndex}].nom" class="form-control">
