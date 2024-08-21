@@ -70,7 +70,7 @@ public class UtilisateurController {
                 .body(new ByteArrayResource(user.get().getPhoto()));
     }
     @PostMapping
-    public String saveUser(@ModelAttribute("Utilisateur") Utilisateur user, RedirectAttributes redirectAttributes, BindingResult result, @RequestParam("file") MultipartFile file) {
+    public String saveUser(@ModelAttribute("utilisateur") Utilisateur user, RedirectAttributes redirectAttributes, BindingResult result, @RequestParam("file") MultipartFile file) {
 
         try {
             if (!file.isEmpty()) {
@@ -90,7 +90,7 @@ public class UtilisateurController {
     public String editProductForm(@PathVariable Long id, Model model) {
         Optional<Utilisateur> optionalUtilisateur = utilisateurService.getUtilisateurById(id);
         if (optionalUtilisateur.isPresent()) {
-            model.addAttribute("Utilisateur", optionalUtilisateur.get());
+            model.addAttribute("utilisateur", optionalUtilisateur.get());
             return "utilisateur/edit";
         } else {
             model.addAttribute("errorMessage", "Utiisateur not found");
@@ -128,7 +128,7 @@ public class UtilisateurController {
         }
     }*/
    @PostMapping("/{id}")
-   public String updateUser(@PathVariable("id") Long id, @Valid @ModelAttribute("Utilisateur") Utilisateur user, BindingResult result, @RequestParam("file") MultipartFile file) {
+   public String updateUser(@PathVariable("id") Long id, @Valid @ModelAttribute("utilisateur") Utilisateur user, BindingResult result, @RequestParam("file") MultipartFile file) {
 
        try {
            if (!file.isEmpty()) {
@@ -154,7 +154,7 @@ public class UtilisateurController {
         Optional<Utilisateur> optionalUtilisateur = utilisateurService.getUtilisateurById(id);
         if (optionalUtilisateur.isPresent()) {
            utilisateurService.SupprimerUtilisateur(optionalUtilisateur);
-            utilisateurService.deleteUtilisateur(id);
+            //utilisateurService.deleteUtilisateur(id);
         } else {
             // Handle the case when the product is not found
             // Optionally add a message or redirect

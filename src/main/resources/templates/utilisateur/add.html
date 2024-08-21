@@ -15,64 +15,65 @@
 <main role="main" class="flex-shrink-0">
   <div class="container mt-5">
     <div class="">
-      <h1>creation cv </h1>
-        <form th:action="@{/utilisateur}" th:object="${Utilisateur}" method="post" enctype="multipart/form-data" class="row g-3">
+      <h1 align="center">creation cv </h1>
+      <h4>information personnel</h4>
+        <form th:action="@{/utilisateur}" th:object="${utilisateur}" method="post" enctype="multipart/form-data" class="row g-3">
         <div class="col-md-6">
           <label for="nom">Nom:</label>
-          <input type="text" id="nom" class="form-control" th:field="*{nom}"/>
+          <input type="text" id="nom" class="form-control" th:field="*{nom}" required/>
         </div>
           <div class="col-md-6">
           <label for="prenom">Prénom:</label>
-          <input type="text" id="prenom" class="form-control" th:field="*{prenom}"/>
+          <input type="text" id="prenom" class="form-control" th:field="*{prenom}" required/>
         </div>
           <div class="col-md-6">
           <label for="adresse">Adresse:</label>
-          <input type="text" id="adresse" class="form-control" th:field="*{adresse}"/>
+          <input type="text" id="adresse" class="form-control" th:field="*{adresse}" required/>
         </div>
           <div class="col-md-6">
           <label for="email">Email:</label>
-          <input type="email" id="email" class="form-control" th:field="*{email}"/>
+          <input type="email" id="email" class="form-control" th:field="*{email}" required/>
         </div>
           <div class="col-md-6">
           <label for="photo">Photo:</label>
-          <input type="file" id="photo" name="file" class="form-control"/>
+          <input type="file" id="photo" name="file" class="form-control" required/>
         </div>
           <div class="col-md-6">
           <label for="dateNaissance">Date de naissance:</label>
-          <input type="date" id="dateNaissance" class="form-control" th:field="*{dateNaissance}"/>
+          <input type="date" id="dateNaissance" class="form-control" th:field="*{dateNaissance}" required/>
         </div>
           <div class="col-md-6">
           <label for="telephone">Téléphone:</label>
-          <input type="text" id="telephone" class="form-control" th:field="*{telephone}"/>
+          <input type="text" id="telephone" class="form-control" th:field="*{telephone}" required/>
         </div>
           <div class="col-md-6">
           <label for="sexe">Sexe:</label>
-          <select id="sexe" class="form-control" th:field="*{sexe}">
-            <option value="Masculin" th:selected="${Utilisateur.sexe == 'Masculin'}">Masculin</option>
-            <option value="Féminin" th:selected="${Utilisateur.sexe == 'Féminin'}">Féminin</option>
-            <option value="Autre" th:selected="${Utilisateur.sexe == 'Autre'}">Autre</option>
+          <select id="sexe" class="form-control" th:field="*{sexe}" required>
+            <option value="Masculin" th:selected="${utilisateur.sexe == 'Masculin'}">Masculin</option>
+            <option value="Féminin" th:selected="${utilisateur.sexe == 'Féminin'}">Féminin</option>
+            <option value="Autre" th:selected="${utilisateur.sexe == 'Autre'}">Autre</option>
           </select>
         </div>
           <div class="col-md-6">
           <label for="nationalite">Nationalité:</label>
-          <input type="text" id="nationalite" class="form-control" th:field="*{nationalite}"/>
+          <input type="text" id="nationalite" class="form-control" th:field="*{nationalite}" required/>
         </div>
           <div class="col-md-6">
           <label for="situationMatrimoniale">Situation matrimoniale:</label>
-          <select id="situationMatrimoniale" class="form-control" th:field="*{situationMatrimoniale}">
-            <option value="Célibataire" th:selected="${Utilisateur.situationMatrimoniale == 'Célibataire'}">Célibataire</option>
-            <option value="Marié(e)" th:selected="${Utilisateur.situationMatrimoniale == 'Marié(e)'}">Marié(e)</option>
-            <option value="Divorcé(e)" th:selected="${Utilisateur.situationMatrimoniale == 'Divorcé(e)'}">Divorcé(e)</option>
-            <option value="Veuf(ve)" th:selected="${Utilisateur.situationMatrimoniale == 'Veuf(ve)'}">Veuf(ve)</option>
+          <select id="situationMatrimoniale" class="form-control" th:field="*{situationMatrimoniale}" required >
+            <option value="Célibataire" th:selected="${utilisateur.situationMatrimoniale == 'Célibataire'}">Célibataire</option>
+            <option value="Marié(e)" th:selected="${utilisateur.situationMatrimoniale == 'Marié(e)'}">Marié(e)</option>
+            <option value="Divorcé(e)" th:selected="${utilisateur.situationMatrimoniale == 'Divorcé(e)'}">Divorcé(e)</option>
+            <option value="Veuf(ve)" th:selected="${utilisateur.situationMatrimoniale == 'Veuf(ve)'}">Veuf(ve)</option>
           </select>
         </div>
           <div class="col-md-12">
           <label for="description">Description:</label>
-          <textarea id="description" class="form-control" th:field="*{description}"></textarea>
+          <textarea id="description" class="form-control" th:field="*{description}" required></textarea>
         </div>
           <!-- Éducations -->
           <div class="col-12 mt-4">
-            <h4>Éducations</h4>
+            <h4>Formations</h4>
             <div id="educations-container" class="row g-3">
               <div th:each="education, iterStat : *{educations}" class="education-row row g-3 mb-3">
                 <div class="col-md-6">
@@ -163,14 +164,10 @@
               <div th:each="connaissance, iterStat : *{knowledges}" class="connaissance-row row g-3 mb-3">
                 <div class="col-md-12">
                   <label class="form-label">Catégorie</label>
-                  <input type="text" th:field="*{knowledges[__${iterStat.index}__].category}" class="form-control">
-                </div>
-
-                <div class="col-md-12">
-                  <label class="form-label">Nom</label>
                   <input type="text" th:field="*{knowledges[__${iterStat.index}__].nom}" class="form-control">
                 </div>
-                <div class="col-md-12">
+
+                               <div class="col-md-12">
                   <label class="form-label">Connaissance</label>
                   <textarea type="text" th:field="*{knowledges[__${iterStat.index}__].description}" class="form-control"></textarea>
                 </div>
@@ -211,7 +208,7 @@
                   <input type="text" th:field="*{centreInterets[__${iterStat.index}__].nom}" class="form-control">
                 </div>
                 <div class="col-md-12">
-                  <label class="form-label">Détails</label>
+                  <label class="form-label">proprietes</label>
                   <input type="text" th:field="*{centreInterets[__${iterStat.index}__].proprietes}" class="form-control">
                 </div>
               </div>
@@ -325,12 +322,9 @@
     const row = document.createElement('div');
     row.className = 'connaissance-row row g-3 mb-3';
     row.innerHTML = `
-      <div class="col-md-12">
-        <label class="form-label">Catégorie</label>
-        <input type="text" name="knowledges[${connaissanceIndex}].category" class="form-control">
-      </div>
+
        <div class="col-md-12">
-        <label class="form-label">Nom</label>
+        <label class="form-label">Catégory</label>
         <input type="text" name="knowledges[${connaissanceIndex}].nom" class="form-control">
       </div>
       <div class="col-md-12">
@@ -373,12 +367,9 @@
         <label class="form-label">Centre d'Intérêt</label>
         <input type="text" name="centreInterets[${centreInteretIndex}].nom" class="form-control">
       </div>
-      <div class="col-md-12">
-        <label class="form-label">Détails</label>
-        <textarea type="text" name="centreInterets[${centreInteretIndex}].description" class="form-control"></textarea>
-      </div>
+
        <div class="col-md-12">
-        <label class="form-label">Détails</label>
+        <label class="form-label">proprietes</label>
         <textarea type="text" name="centreInterets[${centreInteretIndex}].proprietes" class="form-control"></textarea>
       </div>
     `;

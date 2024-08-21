@@ -6,13 +6,21 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link th:href="@{styles/main.css}" rel="stylesheet"/>
+  <style>
+    @media print {
+      .no-print {
+        display: none;
+      }
+    }
+
+  </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 
 <div class="container mt-5">
   <div>
-    <button id="download-pdf" class="btn btn-primary">Télécharger le CV</button>
+    <button id="download-pdf" class="btn btn-primary no-print">Télécharger le CV</button>
   </div>
   <!-- Informations personnelles -->
   <div class="card mb-4" id="personal-info">
@@ -37,7 +45,6 @@
       </div>
     </div>
   </div>
-
   <!-- Formations -->
   <div class="card mb-4" id="education">
     <div class="card-header">
@@ -119,9 +126,8 @@
     <div class="card-body">
       <ul class="list-group" th:if="${!#lists.isEmpty(utilisateur.knowledges)}">
         <li th:each="connaissance : ${utilisateur.knowledges}" class="list-group-item">
-          <h5 th:text="${connaissance.nom}"></h5>
           <p><strong>Catégorie:</strong> <span th:text="${connaissance.category}"></span></p>
-          <p><strong>Description:</strong> <span th:text="${connaissance.description}"></span></p>
+          <p><strong>Description:</strong> <span th:text="${connaissance.nom}"></span></p>
         </li>
       </ul>
       <p th:unless="${!#lists.isEmpty(utilisateur.knowledges)}">Aucune connaissance  disponible.</p>
@@ -150,7 +156,25 @@
 <script>
   document.getElementById('download-pdf').addEventListener('click', function() {
     const element = document.querySelector('.container'); // Cible la section spécifique à convertir en PDF
-    html2pdf().from(element).save('details_utilisateur.pdf');
+    const button = document.getElementById('download-pdf');
+
+    // Masquer le bouton avant de générer le PDF
+    button.style.display = 'none';
+
+    // Options pour html2pdf
+    const opt = {
+      margin: 13,
+      filename: 'details_utilisateur.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Générer le PDF
+    html2pdf().from(element).set(opt).save().then(() => {
+      // Réafficher le bouton après la génération du PDF
+      button.style.display = 'block';
+    });
   });
 </script>
 
